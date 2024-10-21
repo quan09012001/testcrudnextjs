@@ -1,25 +1,26 @@
 {
-  "employees": [],
-  "categories": [
+  "employees": [
     {
-      "id": "1",
-      "name": "Sales"
+      "id": "1d8d",
+      "fullName": "Nguyễn Hồng Quân",
+      "profilePicture": "https://th.bing.com/th/id/OIF.f8qwZMrfx2MDGIyhvmeFDg?rs=1&pid=ImgDetMain",
+      "email": "quannhpd09461@fpt.edu.vn",
+      "password": "Quan2023@",
+      "phoneNumber": 326357293,
+      "dayOfBirth": "2024-10-01",
+      "position": "quanly",
+      "accountId": 1
     },
     {
-      "id": "2",
-      "name": "Marketing"
-    },
-    {
-      "id": "3",
-      "name": "Finance"
-    },
-    {
-      "id": "4",
-      "name": "Engineering"
-    },
-    {
-      "id": "5",
-      "name": "Human Resources"
+      "id": "9a7b",
+      "fullName": "Q",
+      "profilePicture": "https://th.bing.com/th/id/OIF.f8qwZMrfx2MDGIyhvmeFDg?rs=1&pid=ImgDetMain",
+      "email": "quannhpd09461@fpt.edu.vn",
+      "password": "Quan2023@",
+      "phoneNumber": 326357293,
+      "dayOfBirth": "2024-08-28",
+      "position": "Admin",
+      "accountId": 1
     }
   ]
 }

@@ -11,16 +11,26 @@ interface EmployeeFormProps {
 }
 
 const EmployeeForm: React.FC<EmployeeFormProps> = ({ employee, onCancel, onSubmitSuccess }) => {
-    const [name, setName] = useState(employee?.name || '');
-    const [age, setAge] = useState(employee?.age || 0);
-    const [department, setDepartment] = useState(employee?.department || '');
+    const [fullName, setFullName] = useState(employee?.fullName || '');
+    const [profilePicture, setProfilePicture] = useState(employee?.profilePicture || '');
+    const [email, setEmail] = useState(employee?.email || '');
+    const [password, setPassword] = useState(employee?.password || '');
+    const [dayOfBirth, setDayOfBirth] = useState(employee?.dayOfBirth || '');
+    const [phoneNumber, setPhoneNumber] = useState(employee?.phoneNumber || '');
+    const [position, setPosition] = useState(employee?.position || '');
+    const [accountId, setAccountId] = useState(employee?.accountId || 1);
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         if (employee) {
-            setName(employee.name);
-            setAge(employee.age);
-            setDepartment(employee.department);
+            setFullName(employee.fullName);
+            setProfilePicture(employee.profilePicture);
+            setEmail(employee.email);
+            setPassword(employee.password);
+            setPhoneNumber(employee.phoneNumber);
+            setDayOfBirth(employee.dayOfBirth);
+            setPosition(employee.position);
+            setAccountId(employee.accountId);
         }
     }, [employee]);
 
@@ -28,13 +38,19 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ employee, onCancel, onSubmi
         e.preventDefault();
         const emp = {
             id: employee ? employee.id : undefined,
-            name,
-            age,
-            department
+            fullName,
+            profilePicture,
+            email,
+            password,
+            phoneNumber,
+            dayOfBirth,
+            position,
+            accountId,
         };
 
         if (employee) {
             dispatch(updateEmployee(emp));
+
         } else {
             dispatch(createEmployee(emp));
         }
@@ -55,25 +71,74 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ employee, onCancel, onSubmi
                 className="border p-2 w-full mb-2"
                 type="text"
                 placeholder="Enter name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-            />
-            <input
-                className="border p-2 w-full mb-2"
-                type="number"
-                placeholder="Enter age"
-                value={age}
-                onChange={(e) => setAge(Number(e.target.value))}
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
                 required
             />
             <input
                 className="border p-2 w-full mb-2"
                 type="text"
-                placeholder="Enter department"
-                value={department}
-                onChange={(e) => setDepartment(e.target.value)}
+                placeholder="Enter profile picture"
+                value={profilePicture}
+                onChange={(e) => setProfilePicture(e.target.value)}
                 required
+                pattern="https?://.+"
+            />
+            <input
+                className="border p-2 w-full mb-2"
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}"
+            />
+            <input
+                className="border p-2 w-full mb-2"
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            />
+            <input
+                className="border p-2 w-full mb-2"
+                type="number"
+                placeholder="Enter phone number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(Number(e.target.value))}
+                required
+                min="100000000"
+                max="999999999"
+            />
+            <input
+                className="border p-2 w-full mb-2"
+                type="date"
+                placeholder="Enter day of birth"
+                value={dayOfBirth}
+                onChange={(e) => setDayOfBirth(e.target.value)}
+                required
+                min={new Date(1900, 0, 1).toISOString().split('T')[0]}
+                max={new Date().toISOString().split('T')[0]}
+                />
+                <input
+                className="border p-2 w-full mb-2"
+                type="text"
+                placeholder="Enter position"
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
+                required
+                pattern="[a-zA-Z ]+"
+            />
+            <input
+                className="border p-2 w-full mb-2"
+                type="number"
+                placeholder="Enter account id"
+                value={accountId}
+                onChange={(e) => setAccountId(Number(e.target.value))}
+                required
+                min="1"
             />
             <button className="bg-blue-500 text-white p-2 w-full mb-2" type="submit">
                 {employee ? 'Update' : 'Create'}

@@ -1,14 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify"; // Import toast
+import { SV_URL } from "./connect";
 
-const SV_URL = `http://localhost:5000`;
 
 interface Employee {
     id?: number;
-    name: string;
-    age: number;
-    department: string;
+    fullName: string;
+    profilePicture: string;
+    email: string;
+    password: string;
+    phoneNumber: string;
+    dayOfBirth: string;
+    position: string;
+    accountId?: number;
 }
 
 interface EmployeeState {

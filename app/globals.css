@@ -20,6 +20,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.icon-size {
+  width: 16px;
+}
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
