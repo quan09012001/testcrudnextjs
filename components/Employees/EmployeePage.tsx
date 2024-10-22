@@ -44,7 +44,6 @@ const EmployeePage = () => {
                     onSubmitSuccess={handleSubmitSuccess}
                 />
             </Popup>
-
             <EmployeeList onEdit={handleEdit} />
             <ToastContainer />
         </div>
