@@ -37,7 +37,7 @@ const EmployeePage = () => {
         <div className="p-4">
             <button className="bg-blue-500 text-white px-4 py-2 mr-2 rounded" onClick={openPopup}>Thêm nhân viên</button>
             <Popup isOpen={isPopupOpen} onClose={closePopup}>
-                <h1 className="text-2xl font-bold mb-4">Employee Management</h1>
+                <h1 className="text-2xl font-bold mb-4">Quản lý nhân viên</h1>
                 <EmployeeForm
                     employee={selectedEmployee}
                     onCancel={handleCancel}

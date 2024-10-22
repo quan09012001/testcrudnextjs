@@ -66,11 +66,11 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ employee, onCancel, onSubmi
 
     return (
         <form onSubmit={handleSubmit} className="mb-4 p-4 border border-gray-300 rounded">
-            <h2 className="text-xl mb-4">{employee ? 'Edit Employee' : 'Add Employee'}</h2>
+            <h2 className="text-xl mb-4">{employee ? `Chỉnh sửa thông tin nhân viên ${fullName}` : 'Thêm nhân viên'}</h2>
             <input
                 className="border p-2 w-full mb-2"
                 type="text"
-                placeholder="Enter name"
+                placeholder="Nhập họ tên nhân viên"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 required
@@ -78,7 +78,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ employee, onCancel, onSubmi
             <input
                 className="border p-2 w-full mb-2"
                 type="text"
-                placeholder="Enter profile picture"
+                placeholder="Link hình ảnh nhân viên"
                 value={profilePicture}
                 onChange={(e) => setProfilePicture(e.target.value)}
                 required
@@ -87,7 +87,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ employee, onCancel, onSubmi
             <input
                 className="border p-2 w-full mb-2"
                 type="email"
-                placeholder="Enter email"
+                placeholder="Email nhân viên"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -96,7 +96,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ employee, onCancel, onSubmi
             <input
                 className="border p-2 w-full mb-2"
                 type="password"
-                placeholder="Enter password"
+                placeholder="Mật khẩu nhân viên"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -105,7 +105,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ employee, onCancel, onSubmi
             <input
                 className="border p-2 w-full mb-2"
                 type="number"
-                placeholder="Enter phone number"
+                placeholder="Số điện thoại nhân viên"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(Number(e.target.value))}
                 required
@@ -115,40 +115,43 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ employee, onCancel, onSubmi
             <input
                 className="border p-2 w-full mb-2"
                 type="date"
-                placeholder="Enter day of birth"
+                placeholder="Ngày tháng năm sinh nhân viên"
                 value={dayOfBirth}
                 onChange={(e) => setDayOfBirth(e.target.value)}
                 required
                 min={new Date(1900, 0, 1).toISOString().split('T')[0]}
                 max={new Date().toISOString().split('T')[0]}
-                />
-                <input
+            />
+            <select
                 className="border p-2 w-full mb-2"
-                type="text"
-                placeholder="Enter position"
                 value={position}
                 onChange={(e) => setPosition(e.target.value)}
                 required
-                pattern="[a-zA-Z ]+"
-            />
+            >
+                <option value="">Chọn vai trò</option>
+                <option value="Nhân viên bán hàng">Nhân viên bán hàng</option>
+                <option value="Nhân viên kinh doanh">Nhân viên kinh doanh</option>
+                <option value="Thủ kho">Thủ kho</option>
+            </select>
+
             <input
                 className="border p-2 w-full mb-2"
                 type="number"
-                placeholder="Enter account id"
+                placeholder="id nhân viên"
                 value={accountId}
                 onChange={(e) => setAccountId(Number(e.target.value))}
                 required
                 min="1"
             />
             <button className="bg-blue-500 text-white p-2 w-full mb-2" type="submit">
-                {employee ? 'Update' : 'Create'}
+                {employee ? 'Cập nhật thông tin' : 'Thêm nhân viên'}
             </button>
             {onCancel && (
                 <button
                     className="bg-gray-500 text-white p-2 w-full"
                     type="button" onClick={onCancel}
                 >
-                    Cancel
+                    Huỷ
                 </button>
             )}
         </form>

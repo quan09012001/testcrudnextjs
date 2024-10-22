@@ -5,22 +5,34 @@
       "fullName": "Nguyễn Hồng Quân",
       "profilePicture": "https://th.bing.com/th/id/OIF.f8qwZMrfx2MDGIyhvmeFDg?rs=1&pid=ImgDetMain",
       "email": "quannhpd09461@fpt.edu.vn",
-      "password": "Quan2023@",
+      "password": "Quabdauca23",
       "phoneNumber": 326357293,
       "dayOfBirth": "2024-10-01",
-      "position": "quanly",
+      "position": "Nhân viên bán hàng",
       "accountId": 1
     },
     {
-      "id": "9a7b",
-      "fullName": "Q",
-      "profilePicture": "https://th.bing.com/th/id/OIF.f8qwZMrfx2MDGIyhvmeFDg?rs=1&pid=ImgDetMain",
+      "id": "f91f",
+      "fullName": "Quân",
+      "profilePicture": "",
       "email": "quannhpd09461@fpt.edu.vn",
-      "password": "Quan2023@",
-      "phoneNumber": 326357293,
-      "dayOfBirth": "2024-08-28",
-      "position": "Admin",
+      "password": "Quabdauca23",
+      "phoneNumber": 325623912,
+      "dayOfBirth": "2024-10-01",
+      "position": "Nhân viên bán hàng",
+      "accountId": 1
+    },
+    {
+      "id": "030c",
+      "fullName": "111",
+      "profilePicture": "",
+      "email": "quannhpd09461@fpt.edu.vn",
+      "password": "Quabdauca23",
+      "phoneNumber": 212121212,
+      "dayOfBirth": "2024-10-17",
+      "position": "Nhân viên bán hàng",
       "accountId": 1
     }
-  ]
+  ],
+  "upload": []
 }
