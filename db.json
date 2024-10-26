@@ -1,50 +1,6 @@
 {
   "employees": [
     {
-      "id": "1d8d",
-      "fullName": "Nguyễn Hồng Quân",
-      "profilePicture": "https://th.bing.com/th/id/OIF.f8qwZMrfx2MDGIyhvmeFDg?rs=1&pid=ImgDetMain",
-      "email": "quannhpd09461@fpt.edu.vn",
-      "password": "Quabdauca23",
-      "phoneNumber": 326357293,
-      "dayOfBirth": "2024-10-01",
-      "position": "Nhân viên bán hàng",
-      "accountId": 1
-    },
-    {
-      "id": "c992",
-      "fullName": "QÂN",
-      "profilePicture": "https://th.bing.com/th/id/OIP.n2J-te2edVD91F8w6udMmgHaHa?rs=1&pid=ImgDetMain",
-      "email": "quannhpd09461@fpt.edu.vn",
-      "password": "Quabdauca23",
-      "phoneNumber": 992929212,
-      "dayOfBirth": "2000-02-10",
-      "position": "Nhân viên kinh doanh",
-      "accountId": 2
-    },
-    {
-      "id": "2a91",
-      "fullName": "Nguyễn Văn A",
-      "profilePicture": "https://th.bing.com/th/id/OIP.6bZ3_WP8L9Zm_KZxdo_mUAHaE7?pid=ImgDet&rs=1",
-      "email": "vanan001@company.vn",
-      "password": "AnhguoiV123",
-      "phoneNumber": 900123456,
-      "dayOfBirth": "1995-05-12",
-      "position": "Nhân viên bán hàng",
-      "accountId": 3
-    },
-    {
-      "id": "3b72",
-      "accountId": 4,
-      "position": "Nhân viên kinh doanh",
-      "dayOfBirth": "1998-07-22T17:00:00.000Z",
-      "phoneNumber": 812345678,
-      "password": "Btraaan456!",
-      "email": "tranb002@company.vn",
-      "profilePicture": "https://th.bing.com/th/id/OIP.HZXIcVzNUweT3Mo-BjFTEAHaJ4?pid=ImgDet&rs=1",
-      "fullName": "Trần Thị B"
-    },
-    {
       "id": "4c83",
       "fullName": "Lê Văn C",
       "profilePicture": "https://th.bing.com/th/id/OIP.Ks0gjX7rX0J7pslpfuvjkgHaLJ?pid=ImgDet&rs=1",
@@ -80,139 +36,7 @@
     {
       "id": "2a91",
       "fullName": "Nguyễn Văn A",
-      "profilePicture": "https://th.bing.com/th/id/OIP.6bZ3_WP8L9Zm_KZxdo_mUAHaE7?pid=ImgDet&rs=1",
-      "email": "vanan001@company.vn",
-      "password": "AnhguoiV123",
-      "phoneNumber": 900123456,
-      "dayOfBirth": "1995-05-12",
-      "position": "Nhân viên bán hàng",
-      "accountId": 3
-    },
-    {
-      "id": "3b72",
-      "fullName": "Trần Thị B",
-      "profilePicture": "https://th.bing.com/th/id/OIP.HZXIcVzNUweT3Mo-BjFTEAHaJ4?pid=ImgDet&rs=1",
-      "email": "tranb002@company.vn",
-      "password": "Btraaan456!",
-      "phoneNumber": 812345678,
-      "dayOfBirth": "1998-07-23",
-      "position": "Nhân viên kinh doanh",
-      "accountId": 4
-    },
-    {
-      "id": "4c83",
-      "fullName": "Lê Văn C",
-      "profilePicture": "https://th.bing.com/th/id/OIP.Ks0gjX7rX0J7pslpfuvjkgHaLJ?pid=ImgDet&rs=1",
-      "email": "levanc003@company.vn",
-      "password": "Cvancanh789!",
-      "phoneNumber": 733445566,
-      "dayOfBirth": "1990-03-16",
-      "position": "Thủ kho",
-      "accountId": 5
-    },
-    {
-      "id": "1d8d",
-      "fullName": "Nguyễn Hồng Quân",
-      "profilePicture": "https://th.bing.com/th/id/OIF.f8qwZMrfx2MDGIyhvmeFDg?rs=1&pid=ImgDetMain",
-      "email": "quannhpd09461@fpt.edu.vn",
-      "password": "Quabdauca23",
-      "phoneNumber": 326357293,
-      "dayOfBirth": "2024-10-01",
-      "position": "Nhân viên bán hàng",
-      "accountId": 1
-    },
-    {
-      "id": "c992",
-      "fullName": "QÂN",
-      "profilePicture": "https://th.bing.com/th/id/OIP.n2J-te2edVD91F8w6udMmgHaHa?rs=1&pid=ImgDetMain",
-      "email": "quannhpd09461@fpt.edu.vn",
-      "password": "Quabdauca23",
-      "phoneNumber": 992929212,
-      "dayOfBirth": "2000-02-10",
-      "position": "Nhân viên kinh doanh",
-      "accountId": 2
-    },
-    {
-      "id": "2a91",
-      "fullName": "Nguyễn Văn A",
-      "profilePicture": "https://th.bing.com/th/id/OIP.6bZ3_WP8L9Zm_KZxdo_mUAHaE7?pid=ImgDet&rs=1",
-      "email": "vanan001@company.vn",
-      "password": "AnhguoiV123",
-      "phoneNumber": 900123456,
-      "dayOfBirth": "1995-05-12",
-      "position": "Nhân viên bán hàng",
-      "accountId": 3
-    },
-    {
-      "id": "3b72",
-      "fullName": "Trần Thị B",
-      "profilePicture": "https://th.bing.com/th/id/OIP.HZXIcVzNUweT3Mo-BjFTEAHaJ4?pid=ImgDet&rs=1",
-      "email": "tranb002@company.vn",
-      "password": "Btraaan456!",
-      "phoneNumber": 812345678,
-      "dayOfBirth": "1998-07-23",
-      "position": "Nhân viên kinh doanh",
-      "accountId": 4
-    },
-    {
-      "id": "4c83",
-      "fullName": "Lê Văn C",
-      "profilePicture": "https://th.bing.com/th/id/OIP.Ks0gjX7rX0J7pslpfuvjkgHaLJ?pid=ImgDet&rs=1",
-      "email": "levanc003@company.vn",
-      "password": "Cvancanh789!",
-      "phoneNumber": 733445566,
-      "dayOfBirth": "1990-03-16",
-      "position": "Thủ kho",
-      "accountId": 5
-    },
-    {
-      "id": "5d94",
-      "fullName": "Phạm Minh D",
-      "profilePicture": "https://th.bing.com/th/id/OIP.rVzMThO9cywz6w4lUBY66wHaHa?pid=ImgDet&rs=1",
-      "email": "phamd004@company.vn",
-      "password": "PhamminhD123@",
-      "phoneNumber": 845678900,
-      "dayOfBirth": "1989-11-25",
-      "position": "Nhân viên bán hàng",
-      "accountId": 6
-    },
-    {
-      "id": "7f26",
-      "fullName": "Đặng Văn F2",
-      "profilePicture": "https://th.bing.com/th/id/OIP.z94Q-YLALjUDjbA-SV3ydgHaJ4?pid=ImgDet&rs=1",
-      "email": "dangf006@company.vn",
-      "password": "DangvanF456!",
-      "phoneNumber": 899556677,
-      "dayOfBirth": "1996-02-05",
-      "position": "Thủ kho",
-      "accountId": 8
-    },
-    {
-      "id": "1d8d",
-      "fullName": "Nguyễn Hồng Quân",
-      "profilePicture": "https://th.bing.com/th/id/OIF.f8qwZMrfx2MDGIyhvmeFDg?rs=1&pid=ImgDetMain",
-      "email": "quannhpd09461@fpt.edu.vn",
-      "password": "Quabdauca23",
-      "phoneNumber": 326357293,
-      "dayOfBirth": "2024-10-01",
-      "position": "Nhân viên bán hàng",
-      "accountId": 1
-    },
-    {
-      "id": "c992",
-      "fullName": "QÂN",
-      "profilePicture": "https://th.bing.com/th/id/OIP.n2J-te2edVD91F8w6udMmgHaHa?rs=1&pid=ImgDetMain",
-      "email": "quannhpd09461@fpt.edu.vn",
-      "password": "Quabdauca23",
-      "phoneNumber": 992929212,
-      "dayOfBirth": "2000-02-10",
-      "position": "Nhân viên kinh doanh",
-      "accountId": 2
-    },
-    {
-      "id": "2a91",
-      "fullName": "Nguyễn Văn A",
-      "profilePicture": "https://th.bing.com/th/id/OIP.6bZ3_WP8L9Zm_KZxdo_mUAHaE7?pid=ImgDet&rs=1",
+      "profilePicture": "https://firebasestorage.googleapis.com/v0/b/upload-img-4d7f4.appspot.com/o/employees%2F1729923278943_two_million_dollars_playlist_cover.png?alt=media&token=03e6187e-f1bd-49ff-8bf4-aa001fe08fb3",
       "email": "vanan001@company.vn",
       "password": "AnhguoiV123",
       "phoneNumber": 900123456,
@@ -309,17 +133,6 @@
       "accountId": 6
     },
     {
-      "id": "7f26",
-      "fullName": "Đặng Văn F",
-      "profilePicture": "https://th.bing.com/th/id/OIP.z94Q-YLALjUDjbA-SV3ydgHaJ4?pid=ImgDet&rs=1",
-      "email": "dangf006@company.vn",
-      "password": "DangvanF456!",
-      "phoneNumber": 899556677,
-      "dayOfBirth": "1996-02-05",
-      "position": "Thủ kho",
-      "accountId": 8
-    },
-    {
       "id": "1d8d",
       "fullName": "Nguyễn Hồng Quân",
       "profilePicture": "https://th.bing.com/th/id/OIF.f8qwZMrfx2MDGIyhvmeFDg?rs=1&pid=ImgDetMain",
@@ -384,17 +197,6 @@
       "dayOfBirth": "1989-11-25",
       "position": "Nhân viên bán hàng",
       "accountId": 6
-    },
-    {
-      "id": "7f26",
-      "fullName": "Đặng Văn F",
-      "profilePicture": "https://th.bing.com/th/id/OIP.z94Q-YLALjUDjbA-SV3ydgHaJ4?pid=ImgDet&rs=1",
-      "email": "dangf006@company.vn",
-      "password": "DangvanF456!",
-      "phoneNumber": 899556677,
-      "dayOfBirth": "1996-02-05",
-      "position": "Thủ kho",
-      "accountId": 8
     },
     {
       "id": "1d8d",
@@ -519,8 +321,8 @@
     },
     {
       "id": "7f26",
-      "fullName": "Đặng Văn F",
-      "profilePicture": "https://th.bing.com/th/id/OIP.z94Q-YLALjUDjbA-SV3ydgHaJ4?pid=ImgDet&rs=1",
+      "fullName": "Đặng Văn F1",
+      "profilePicture": "https://firebasestorage.googleapis.com/v0/b/upload-img-4d7f4.appspot.com/o/employees%2F1729923323670_DALL%C2%B7E%202024-10-25%2014.25.20%20-%20Create%20a%2016_9%20karaoke%20background%20image%20inspired%20by%20the%20Vietnamese%20song%20'H%C3%A3y%20Vui%20L%C3%AAn%20Em.'%20The%20image%20should%20feature%20a%20romantic%2C%20cozy%20scene%20with%20warm%20lig.webp?alt=media&token=aa250d38-1ee4-4da8-812e-759490241817",
       "email": "dangf006@company.vn",
       "password": "DangvanF456!",
       "phoneNumber": 899556677,
@@ -809,7 +611,7 @@
       "profilePicture": "https://th.bing.com/th/id/OIP.pwgSkToG_Tz5YB3G5DgO2wHaE8?pid=ImgDet&rs=1",
       "email": "hoange005@company.vn",
       "password": "HoanganhE!23",
-      "phoneNumber": 712334455,
+      "phoneNumber": 111111111,
       "dayOfBirth": "1993-08-18",
       "position": "Nhân viên kinh doanh",
       "accountId": 7
@@ -1484,6 +1286,47 @@
       "dayOfBirth": "1996-02-05",
       "position": "Thủ kho",
       "accountId": 8
+    },
+    {
+      "id": "6316",
+      "fullName": "AQUAN",
+      "profilePicture": "https://noimage.jpg",
+      "email": "quannhpd09461@fpt.edu.vn",
+      "password": "Quabdauca23",
+      "phoneNumber": 326357293,
+      "dayOfBirth": "2001-01-09",
+      "position": "Nhân viên bán hàng",
+      "accountId": 1
+    },
+    {
+      "id": "f771",
+      "fullName": "Quân Lao công2",
+      "profilePicture": "",
+      "email": "quannhpd09461@fpt.edu.vn",
+      "password": "",
+      "phoneNumber": "1111111111",
+      "dayOfBirth": "09/01/2001",
+      "position": "lao công"
+    },
+    {
+      "id": "46d6",
+      "fullName": "Q",
+      "profilePicture": "https://firebasestorage.googleapis.com/v0/b/upload-img-4d7f4.appspot.com/o/employees%2F1729921162095_DALL%C2%B7E%202024-10-25%2014.25.20%20-%20Create%20a%2016_9%20karaoke%20background%20image%20inspired%20by%20the%20Vietnamese%20song%20'H%C3%A3y%20Vui%20L%C3%AAn%20Em.'%20The%20image%20should%20feature%20a%20romantic%2C%20cozy%20scene%20with%20warm%20lig.webp?alt=media&token=9d75c4b7-93be-46bf-8f0b-813a765560e7",
+      "email": "quannhpd09461@fpt.edu.vn",
+      "password": "",
+      "phoneNumber": "0101010101",
+      "dayOfBirth": "2024-10-06",
+      "position": "QTV"
+    },
+    {
+      "id": "7259",
+      "fullName": "Q",
+      "profilePicture": "https://firebasestorage.googleapis.com/v0/b/upload-img-4d7f4.appspot.com/o/employees%2F1729921163507_DALL%C2%B7E%202024-10-25%2014.25.20%20-%20Create%20a%2016_9%20karaoke%20background%20image%20inspired%20by%20the%20Vietnamese%20song%20'H%C3%A3y%20Vui%20L%C3%AAn%20Em.'%20The%20image%20should%20feature%20a%20romantic%2C%20cozy%20scene%20with%20warm%20lig.webp?alt=media&token=1efe5890-8098-4b40-886b-2f31f62eb213",
+      "email": "quannhpd09461@fpt.edu.vn",
+      "password": "",
+      "phoneNumber": "0101010101",
+      "dayOfBirth": "2024-10-06",
+      "position": "QTV"
     }
   ]
 }

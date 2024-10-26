@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-toastify"; // Import toast
 import { SV_URL } from "./connect";
 
-
-interface Employee {
+export interface Employee {
     id?: number;
     fullName: string;
     profilePicture: string;
@@ -81,31 +79,28 @@ const employeeSlice = createSlice({
             .addCase(fetchEmployees.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message ?? 'Không tìm thấy Employees';
-                toast.error('Lỗi khi tải danh sách Employees!');
+                console.error('Lỗi khi tải danh sách Employees:', state.error);
             })
             .addCase(createEmployee.fulfilled, (state, action) => {
                 state.data.push(action.payload);
-                toast.success('Tạo mới Employee thành công!');
             })
             .addCase(createEmployee.rejected, (state, action) => {
-                toast.error('Lỗi khi tạo mới Employee!');
+                console.error('Lỗi khi tạo mới Employee:', action.error);
             })
             .addCase(updateEmployee.fulfilled, (state, action) => {
                 const index = state.data.findIndex((item: Employee) => item.id === action.payload.id);
                 if (index !== -1) {
                     state.data[index] = action.payload;
-                    toast.success('Cập nhật Employee thành công!');
                 }
             })
             .addCase(updateEmployee.rejected, (state, action) => {
-                toast.error('Lỗi khi cập nhật Employee!');
+                console.error('Lỗi khi cập nhật Employee:', action.error);
             })
             .addCase(deleteEmployee.fulfilled, (state, action) => {
                 state.data = state.data.filter((item: Employee) => item.id !== action.payload);
-                toast.success('Xóa Employee thành công!');
             })
             .addCase(deleteEmployee.rejected, (state, action) => {
-                toast.error('Lỗi khi xóa Employee!');
+                console.error('Lỗi khi xóa Employee:', action.error);
             });
     },
 });

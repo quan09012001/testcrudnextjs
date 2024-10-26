@@ -1,84 +1,153 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteEmployee, fetchEmployees } from "@/store/slices/employeeSlice";
+import { createEmployee, deleteEmployee, fetchEmployees, updateEmployee } from "@/store/slices/employeeSlice";
 import { RootState, AppDispatch } from "@/store/store";
-import { toast } from "react-toastify";
-import Popup from "@/components/Popup";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faEye,
-    faEdit,
-    faTrashAlt,
-} from "@fortawesome/free-solid-svg-icons";
-import ReactPaginate from "react-paginate";
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
+import { InputText } from 'primereact/inputtext';
+import { Employee } from "@/store/slices/employeeSlice";
+import { storage } from "@/firebaseConfig";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { Calendar } from 'primereact/calendar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-interface EmployeeListProps {
-    onEdit: (employee: any) => void; // Hàm để chỉnh sửa employee
-}
-
-const EmployeeList: React.FC<EmployeeListProps> = ({ onEdit }) => {
+const EmployeeList: React.FC = () => {
     const { data, loading } = useSelector((state: RootState) => state.employee);
     const dispatch = useDispatch<AppDispatch>();
 
-    // State để quản lý trang hiện tại và số lượng item trên mỗi trang
-    const [currentPage, setCurrentPage] = useState(0);
-    const itemsPerPage = 5; // Số lượng item hiển thị trên mỗi trang
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isPopupAddOpen, setPopupAddOpen] = useState(false);
+    const [isPopupEditOpen, setPopupEditOpen] = useState(false);
+    const [isPopupViewOpen, setPopupViewOpen] = useState(false);
+    const [selectedEmployee, setSelectedEmployee] = useState<Employee>({
+        fullName: '',
+        profilePicture: '',
+        email: '',
+        password: '',
+        phoneNumber: '',
+        dayOfBirth: '',
+        position: '',
+    });
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [isUploading, setIsUploading] = useState(false); // Thêm state để kiểm tra trạng thái tải lên
 
-    // popup
-    const [isPopupOpen, setPopupOpen] = useState(false);
-    const [selectedEmployee, setSelectedEmployee] = useState<any>(null);
-
-    // Lấy danh sách employees khi component được mount
     useEffect(() => {
-        // Gọi API với trang hiện tại và số lượng item mỗi trang
         dispatch(fetchEmployees());
     }, [dispatch]);
 
-    // Xử lý thay đổi trang
-    const handlePageChange = (selectedItem: { selected: number }) => {
-        setCurrentPage(selectedItem.selected); // Cập nhật trang hiện tại
+    const openAddPopup = () => {
+        setSelectedEmployee({
+            fullName: '',
+            profilePicture: '',
+            email: '',
+            password: '',
+            phoneNumber: '',
+            dayOfBirth: '',
+            position: '',
+        });
+        setPopupAddOpen(true);
+        setImageFile(null); // Reset hình ảnh khi mở popup thêm
     };
 
-    // Lấy danh sách nhân viên cho trang hiện tại
-    const currentData = data.slice(
-        currentPage * itemsPerPage,
-        (currentPage + 1) * itemsPerPage
-    );
-
-    // Hàm mở popup
-    const openPopup = (employee: any) => {
+    const openEditPopup = (employee: Employee) => {
         setSelectedEmployee(employee);
-        setPopupOpen(true);
+        setPopupEditOpen(true);
+        setImageFile(null); // Reset hình ảnh khi mở popup chỉnh sửa
     };
 
-    // Đóng popup
+    const openViewPopup = (employee: Employee) => {
+        setSelectedEmployee(employee);
+        setPopupViewOpen(true);
+    };
+
     const closePopup = () => {
-        setPopupOpen(false);
-        setSelectedEmployee(null); // Đặt lại nhân viên đã chọn khi đóng popup
+        setPopupAddOpen(false);
+        setPopupEditOpen(false);
+        setPopupViewOpen(false);
+        setImageFile(null);
+        setIsUploading(false); // Reset trạng thái tải lên
     };
 
-    // Hàm xử lý khi nhấn nút xóa
+    const handleImageUpload = async () => {
+        if (!imageFile) return null;
+        const imageRef = ref(storage, `employees/${Date.now()}_${imageFile.name}`);
+        setIsUploading(true); // Đánh dấu đang tải lên
+        await uploadBytes(imageRef, imageFile);
+        const downloadURL = await getDownloadURL(imageRef);
+        setIsUploading(false); // Kết thúc trạng thái tải lên
+        return downloadURL;
+    };
+
+    const handleAddEmployee = async () => {
+        try {
+            const profilePicture = imageFile ? await handleImageUpload() : "";
+            await dispatch(createEmployee({ ...selectedEmployee, profilePicture: profilePicture ?? "" })).unwrap();
+            toast.success("Thêm nhân viên thành công!");
+            closePopup();
+        } catch (error) {
+            console.error("Failed to add employee:", error);
+            toast.error("Thêm nhân viên thất bại!");
+        }
+    };
+
+    const handleEditEmployee = async () => {
+        try {
+            const profilePicture = imageFile
+                ? await handleImageUpload()
+                : selectedEmployee.profilePicture;
+
+            await dispatch(updateEmployee({ ...selectedEmployee, profilePicture: profilePicture || '' })).unwrap();
+            toast.success("Cập nhật nhân viên thành công!");
+            closePopup();
+        } catch (error) {
+            console.error("Failed to update employee:", error);
+            toast.error("Cập nhật nhân viên thất bại!");
+        }
+    };
+
     const handleDelete = async (id: number) => {
         const confirmDelete = window.confirm("Bạn có thực sự muốn xoá nhân viên này không?");
         if (confirmDelete) {
             try {
-                await dispatch(deleteEmployee(id)).unwrap(); // Xóa nhân viên trong Redux store
-                toast.success("Employee deleted successfully!");
-
-                // Nếu xóa nhân viên ở trang cuối và chỉ còn 1 nhân viên trên trang đó, thì quay về trang trước
-                if (currentData.length === 1 && currentPage > 0) {
-                    setCurrentPage(currentPage - 1); // Quay lại trang trước nếu trang hiện tại không còn dữ liệu
-                }
-
-                // Fetch lại danh sách nhân viên sau khi xóa
-                await dispatch(fetchEmployees());
-
+                await dispatch(deleteEmployee(id)).unwrap();
+                toast.success("Xóa nhân viên thành công!");
             } catch (error) {
-                toast.error("Failed to delete employee!");
+                console.error("Failed to delete employee:", error);
+                toast.error("Xóa nhân viên thất bại!");
             }
         }
     };
+
+    const filteredEmployees = data.filter((employee) =>
+        employee.fullName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const actionBodyTemplate = (employee: Employee) => (
+        <>
+            <Button
+                icon="pi pi-eye"
+                className="p-button-rounded p-button-success mr-2"
+                onClick={() => openViewPopup(employee)}
+                tooltip="Xem"
+            />
+            <Button
+                icon="pi pi-pencil"
+                className="p-button-rounded p-button-info mr-2"
+                onClick={() => openEditPopup(employee)}
+                tooltip="Sửa"
+            />
+            <Button
+                icon="pi pi-trash"
+                className="p-button-rounded p-button-danger"
+                onClick={() => handleDelete(employee.id!)}
+                tooltip="Xoá"
+            />
+        </>
+    );
 
     if (loading) {
         return <div className="text-center">Loading...</div>;
@@ -86,97 +155,140 @@ const EmployeeList: React.FC<EmployeeListProps> = ({ onEdit }) => {
 
     return (
         <>
-            <table className="min-w-full bg-white border border-gray-200 mt-4">
-                <thead>
-                    <tr className="bg-gray-100">
-                        <th className="py-2 px-4 border-b">STT</th>
-                        <th className="py-2 px-4 border-b">Họ tên</th>
-                        <th className="py-2 px-4 border-b">Email</th>
-                        <th className="py-2 px-4 border-b">Số điện thoại</th>
-                        <th className="py-2 px-4 border-b">Vai trò</th>
-                        <th colSpan={1} className="py-2 px-4 border-b">Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentData.map((employee, index) => (
-                        <tr key={employee.id} className="text-center">
-                            <td className="py-2 px-4 border-b">{index + 1 + currentPage * itemsPerPage}</td>
-                            <td className="py-2 px-4 border-b">{employee.fullName}</td>
-                            <td className="py-2 px-4 border-b">{employee.email}</td>
-                            <td className="py-2 px-4 border-b">0{employee.phoneNumber}</td>
-                            <td className="py-2 px-4 border-b">{employee.position}</td>
+            <ToastContainer />
+            <div className="flex justify-between mb-3">
+                <Button label="Thêm Nhân Viên" icon="pi pi-plus" className="p-button-success" onClick={openAddPopup} />
+                <InputText
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Tìm kiếm nhân viên..."
+                />
+            </div>
 
-                            <td className="flex-col py-2">
-                                <button
-                                    className="bg-green-500 text-white px-4 py-2"
-                                    onClick={() => openPopup(employee)}
-                                >
-                                    <FontAwesomeIcon icon={faEye} />
-                                </button>
-                                <button
-                                    className="bg-blue-500 text-white px-4 py-2"
-                                    onClick={() => onEdit(employee)}
-                                >
-                                    <FontAwesomeIcon icon={faEdit} />
-                                </button>
-                                <button
-                                    className="bg-red-500 text-white px-4 py-2"
-                                    onClick={() => handleDelete(employee.id!)}
-                                >
-                                    <FontAwesomeIcon icon={faTrashAlt} />
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-
-            <ReactPaginate
-                previousLabel={'Previous'}
-                nextLabel={'Next'}
-                breakLabel={'...'}
-                breakClassName={'break-me'}
-                pageCount={Math.ceil(data.length / itemsPerPage)} // Tính lại số trang
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={3}
-                onPageChange={handlePageChange}
-                forcePage={currentPage} // Buộc ReactPaginate hiển thị đúng trang hiện tại
-                containerClassName={'flex justify-center items-center space-x-2 mt-4'}
-                activeClassName={'bg-green-500 text-white font-bold rounded-full shadow-lg px-4 py-2'}
-                pageClassName={'px-4 py-2 bg-white border border-gray-200 text-gray-800 rounded-full hover:bg-blue-100 hover:text-blue-700 transition-all duration-150 ease-in-out shadow-sm'}
-
-                previousClassName={`px-4 py-2 text-white rounded-full ${currentPage === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 transition-all duration-150 ease-in-out shadow-md'
-                    }`}
-                nextClassName={`px-4 py-2 text-white rounded-full ${currentPage === Math.ceil(data.length / itemsPerPage) - 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 transition-all duration-150 ease-in-out shadow-md'
-                    }`}
-
-                disabledClassName={'px-4 py-2 bg-gray-300 text-gray-500 cursor-not-allowed rounded-full'}
-            />
+            <DataTable value={filteredEmployees} paginator rows={8} className="mt-4">
+                <Column field="id" header="STT" body={(_, { rowIndex }) => rowIndex + 1} style={{ textAlign: 'center', width: '5rem' }} />
+                <Column field="fullName" header="Họ tên" />
+                <Column field="email" header="Email" />
+                <Column field="phoneNumber" header="Số điện thoại" body={(rowData) => '0' + rowData.phoneNumber} />
+                <Column field="position" header="Vai trò" />
+                <Column body={actionBodyTemplate} header="Hành động" style={{ textAlign: 'center', width: '12rem' }} />
+            </DataTable>
 
 
-            {isPopupOpen && selectedEmployee && (
-                <Popup isOpen={isPopupOpen} onClose={closePopup}>
-                    <h2 className="text-xl font-bold text-gray-800">Thông tin nhân viên</h2>
-                    <div className="flex p-4 bg-white rounded-lg shadow-lg">
-                        <img
-                            src={selectedEmployee.profilePicture}
-                            alt={selectedEmployee.fullName}
-                            className="w-32 h-32 rounded-full border-4 border-gray-300 shadow-lg transition duration-300 transform hover:scale-105"
-                        />
-                        <div className="ml-4 flex flex-col justify-center">
-                            <h2 className="text-xl font-bold text-gray-800">{selectedEmployee.fullName}</h2>
-                            <p className="text-gray-600">Email: {selectedEmployee.email}</p>
-                            <p className="text-gray-600">Số điện thoại: 0{selectedEmployee.phoneNumber}</p>
-                            <p className="text-gray-600">Ngày sinh: {selectedEmployee.dayOfBirth}</p>
-                            <p className="text-gray-600">Vai trò: {selectedEmployee.position}</p>
-                            <p className="text-gray-600">Account ID: {selectedEmployee.accountId}</p>
-                            <button className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300" onClick={closePopup}>
-                                Đóng
-                            </button>
-                        </div>
+            {/* Add Employee Dialog */}
+            <Dialog header="Thêm Nhân Viên" visible={isPopupAddOpen} style={{ width: '450px' }} onHide={closePopup}>
+                <div className="p-fluid">
+                    <div className="p-field">
+                        <label>Họ tên</label>
+                        <InputText value={selectedEmployee.fullName} onChange={(e) => setSelectedEmployee({ ...selectedEmployee, fullName: e.target.value })} />
                     </div>
-                </Popup>
-            )}
+                    <div className="p-field">
+                        <label>Hình ảnh</label>
+                        <InputText type="file" onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            setImageFile(file ?? null);
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                    setSelectedEmployee({ ...selectedEmployee, profilePicture: reader.result as string });
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        }} />
+                        {selectedEmployee.profilePicture && <img src={selectedEmployee.profilePicture} alt="Preview" className="mt-2 w-full h-auto" />}
+                    </div>
+                    <div className="p-field">
+                        <label>Email</label>
+                        <InputText value={selectedEmployee.email} onChange={(e) => setSelectedEmployee({ ...selectedEmployee, email: e.target.value })} />
+                    </div>
+                    <div className="p-field">
+                        <label>Số điện thoại</label>
+                        <InputText value={selectedEmployee.phoneNumber} onChange={(e) => setSelectedEmployee({ ...selectedEmployee, phoneNumber: e.target.value })} />
+                    </div>
+                    <div className="p-field">
+                        <label>Ngày sinh</label>
+                        <Calendar value={selectedEmployee.dayOfBirth ? new Date(selectedEmployee.dayOfBirth) : null} onChange={(e) => setSelectedEmployee({ ...selectedEmployee, dayOfBirth: (e.value as Date).toISOString().split('T')[0] })} dateFormat="dd/mm/yy" />
+                    </div>
+                    <div className="p-field">
+                        <label>Vai trò</label>
+                        <InputText value={selectedEmployee.position} onChange={(e) => setSelectedEmployee({ ...selectedEmployee, position: e.target.value })} />
+                    </div>
+                    <Button label="Lưu" icon="pi pi-check" className="mt-2" onClick={handleAddEmployee} disabled={isUploading} />
+                </div>
+            </Dialog>
+
+            {/* Edit Employee Dialog */}
+            <Dialog header="Chỉnh Sửa Nhân Viên" visible={isPopupEditOpen} style={{ width: '450px' }} onHide={closePopup}>
+                <div className="p-fluid">
+                    {/* Các trường giống như trên popup thêm */}
+                    <div className="p-field">
+                        <label>Họ tên</label>
+                        <InputText value={selectedEmployee.fullName} onChange={(e) => setSelectedEmployee({ ...selectedEmployee, fullName: e.target.value })} />
+                    </div>
+                    <div className="p-field">
+                        <label>Hình ảnh</label>
+                        <InputText type="file" onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            setImageFile(file ?? null);
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                    setSelectedEmployee({ ...selectedEmployee, profilePicture: reader.result as string });
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        }} />
+                        {selectedEmployee.profilePicture && <img src={selectedEmployee.profilePicture} alt="Preview" className="mt-2 w-full h-auto" />}
+                    </div>
+                    <div className="p-field">
+                        <label>Email</label>
+                        <InputText value={selectedEmployee.email} onChange={(e) => setSelectedEmployee({ ...selectedEmployee, email: e.target.value })} />
+                    </div>
+                    <div className="p-field">
+                        <label>Số điện thoại</label>
+                        <InputText value={selectedEmployee.phoneNumber} onChange={(e) => setSelectedEmployee({ ...selectedEmployee, phoneNumber: e.target.value })} />
+                    </div>
+                    <div className="p-field">
+                        <label>Ngày sinh</label>
+                        <Calendar value={selectedEmployee.dayOfBirth ? new Date(selectedEmployee.dayOfBirth) : null} onChange={(e) => setSelectedEmployee({ ...selectedEmployee, dayOfBirth: (e.value as Date).toISOString().split('T')[0] })} dateFormat="dd/mm/yy" />
+                    </div>
+                    <div className="p-field">
+                        <label>Vai trò</label>
+                        <InputText value={selectedEmployee.position} onChange={(e) => setSelectedEmployee({ ...selectedEmployee, position: e.target.value })} />
+                    </div>
+                    <Button label="Cập nhật" icon="pi pi-check" className="mt-2" onClick={handleEditEmployee} disabled={isUploading} />
+                </div>
+            </Dialog>
+
+            {/* View Employee Dialog */}
+            <Dialog header="Chi Tiết Nhân Viên" visible={isPopupViewOpen} style={{ width: '450px' }} onHide={closePopup}>
+                <div className="p-fluid">
+                    <div className="p-field">
+                        <label>Họ tên</label>
+                        <div>{selectedEmployee.fullName}</div>
+                    </div>
+                    <div className="p-field">
+                        <label>Hình ảnh</label>
+                        {selectedEmployee.profilePicture && <img src={selectedEmployee.profilePicture} alt="Profile" className="mt-2 w-full h-auto" />}
+                    </div>
+                    <div className="p-field">
+                        <label>Email</label>
+                        <div>{selectedEmployee.email}</div>
+                    </div>
+                    <div className="p-field">
+                        <label>Số điện thoại</label>
+                        <div>{selectedEmployee.phoneNumber}</div>
+                    </div>
+                    <div className="p-field">
+                        <label>Ngày sinh</label>
+                        <div>{selectedEmployee.dayOfBirth}</div>
+                    </div>
+                    <div className="p-field">
+                        <label>Vai trò</label>
+                        <div>{selectedEmployee.position}</div>
+                    </div>
+                </div>
+            </Dialog>
         </>
     );
 };
